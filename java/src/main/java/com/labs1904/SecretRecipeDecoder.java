@@ -78,45 +78,27 @@ public class SecretRecipeDecoder {
         int result =0;
         //int to string array
         String str=String.valueOf(num);//Now it will return string
-        System.out.println("str = "+str);
 
-        // String to char array
         char[] ch = str.toCharArray();
-        for (int i = 0; i < ch.length; i++) {
-            System.out.println(ch[i]);
-        }
 
         int n = ch.length;
 
         int i;
 
-        // I) Start from the right most digit
-        // and find the first digit that is smaller
-        // than the digit next to it.
         for (i = n - 1; i > 0; i--)
         {
             if (ch[i] > ch[i - 1]) {
-                System.out.println(ch[i]+" is smaller than "+ch[i - 1]);
                 break;
             }
         }
 
-        // If no such digit is found, then all
-        // digits are in descending order means
-        // there cannot be a greater number with
-        // same set of digits
         if (i == 0)
         {
-            System.out.println("Not possible");
         }
         else
         {
-            System.out.println("possible");
             int x = ch[i - 1], min = i;
 
-            // II) Find the smallest digit on right
-            // side of (i-1)'th digit that is greater
-            // than number[i-1]
             for (int j = i + 1; j < n; j++)
             {
                 if (ch[j] > x && ch[j] < ch[min])
@@ -128,24 +110,13 @@ public class SecretRecipeDecoder {
             char temp = ch[i-1];
             ch[i-1] = ch[min];
             ch[min] = temp;
-            System.out.println("before sorted");
-            for (int k = 0; k < ch.length; k++) {
-                System.out.println(ch[k]);
-            }
-            System.out.println("after sorted");
-            // IV) Sort the digits after (i-1)
-            // in ascending order
+
             Arrays.sort(ch, i, n);
 
-            for (int h = 0; h < ch.length; h++) {
-                System.out.println(ch[h]);
-            }
-
             String string = String.valueOf(ch);
-            System.out.println("string = "+string);
+
 
             int integer=Integer.parseInt(string);
-            System.out.println("integer = "+integer);
 
             result = integer;
         }
