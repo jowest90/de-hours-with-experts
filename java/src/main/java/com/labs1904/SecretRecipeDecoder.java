@@ -72,48 +72,83 @@ public class SecretRecipeDecoder {
      * @param num
      * @return
      */
-    public static int getNextBiggestNumber(int i) {
+    public static int getNextBiggestNumber(int num) {
         // TODO: implement me
+
         int result =0;
-        String str=String.valueOf(i);//Now it will return string
+        //int to string array
+        String str=String.valueOf(num);//Now it will return string
+        System.out.println("str = "+str);
 
-        // Creating array of string length
-        char[] ch = new char[str.length()];
-
-        // Copy character by character into array
-        for (int m = 0; m < str.length(); m++) {
-            ch[m] = str.charAt(m);
+        // String to char array
+        char[] ch = str.toCharArray();
+        for (int i = 0; i < ch.length; i++) {
+            System.out.println(ch[i]);
         }
 
         int n = ch.length;
 
-        for (int j = n - 1; j > 0; j--){//for begins
-            if (ch[j] > ch[j - 1]){//if ch[j] > ch[j - 1] begins
-                if (j==0){
-                    System.out.println("NOT POSSSIBLE");
-                    result = -1;
-                }else{//else begins
-                    System.out.println("POSSSIBLE");
-                    int x = ch[j - 1], min = j;
-                    for (int k = j + 1; k < n; k++){
-                        if (ch[k] > x && ch[k] < ch[min]){
-                            min = k;
-                        }
-                    }
-                    char temp = ch[j-1];
-                    ch[j-1] = ch[min];
-                    ch[min] = temp;
-                    Arrays.sort(ch, j, n);
+        int i;
 
-                    String string = String.valueOf(ch);
+        // I) Start from the right most digit
+        // and find the first digit that is smaller
+        // than the digit next to it.
+        for (i = n - 1; i > 0; i--)
+        {
+            if (ch[i] > ch[i - 1]) {
+                System.out.println(ch[i]+" is smaller than "+ch[i - 1]);
+                break;
+            }
+        }
 
-                    int integer=Integer.parseInt(string);
+        // If no such digit is found, then all
+        // digits are in descending order means
+        // there cannot be a greater number with
+        // same set of digits
+        if (i == 0)
+        {
+            System.out.println("Not possible");
+        }
+        else
+        {
+            System.out.println("possible");
+            int x = ch[i - 1], min = i;
 
-                    result = integer;
-                }//else ends
-            }//if ch[j] > ch[j - 1] endss
-        }//for ends
+            // II) Find the smallest digit on right
+            // side of (i-1)'th digit that is greater
+            // than number[i-1]
+            for (int j = i + 1; j < n; j++)
+            {
+                if (ch[j] > x && ch[j] < ch[min])
+                {
+                    min = j;
+                }
+            }
 
+            char temp = ch[i-1];
+            ch[i-1] = ch[min];
+            ch[min] = temp;
+            System.out.println("before sorted");
+            for (int k = 0; k < ch.length; k++) {
+                System.out.println(ch[k]);
+            }
+            System.out.println("after sorted");
+            // IV) Sort the digits after (i-1)
+            // in ascending order
+            Arrays.sort(ch, i, n);
+
+            for (int h = 0; h < ch.length; h++) {
+                System.out.println(ch[h]);
+            }
+
+            String string = String.valueOf(ch);
+            System.out.println("string = "+string);
+
+            int integer=Integer.parseInt(string);
+            System.out.println("integer = "+integer);
+
+            result = integer;
+        }
         return result;
     }
 
